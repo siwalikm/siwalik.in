@@ -1,0 +1,140 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import HighlightText from "@/utils/HighlightText.astro";
+import Link from "@/components/shared/Link.astro";
+import SocialLinks from "@/components/shared/SocialLinks.astro";
+import ProfilePicture from "@/components/shared/ProfilePicture";
+import Card from "@/components/shared/Card.astro";
+import { getYoutubeSubs } from "@/pages/api/youtube_stats";
+
+const posts = (await getCollection("posts")).sort(function (first, second) {
+  return second.data.publishedAt.getTime() - first.data.publishedAt.getTime();
+});
+const response = await getYoutubeSubs();
+const youtubeStats = await response.items?.[0].statistics;
+---
+
+<Layout>
+  <main class="flex flex-col gap-10">
+    <article
+      class="flex flex-col items-center gap-8 md:flex-row-reverse md:justify-end md:gap-12"
+    >
+      <ProfilePicture client:visible />
+
+      <div class="flex flex-col gap-2">
+        <h1 class="flex items-center gap-2 text-center">
+          <span
+            class="animate-text-gradient bg-gradient-to-r from-amber-200 to-indigo-400 bg-300% bg-clip-text py-1 text-transparent"
+            >Hey, I'm Siwalik</span
+          ><span class="hidden animate-waving-hand md:block">👋</span>
+        </h1>
+
+        <p class="w-auto leading-6">
+          A <HighlightText>thoughtful software engineer</HighlightText> passionate
+          about crafting impactful products and user experiences.
+          <br />
+          <br />
+          Currently based in beautiful <HighlightText>Berlin</HighlightText>,
+          Germany, I hail from the vibrant <HighlightText>
+            city of Joy, Kolkata
+          </HighlightText>, India.
+        </p>
+      </div>
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <p class="w-auto leading-6">
+        Beyond the code, I share my learnings and experiences on <HighlightText>
+          this blog
+        </HighlightText> and my <HighlightText>YouTube</HighlightText> channel, which
+        focuses on software engineering and tech careers, and <HighlightText>
+          things, I wish I knew earlier
+        </HighlightText> in my journey.
+      </p>
+    </article>
+
+    <Card
+      link="https://www.youtube.com/@siwalikm?sub_confirmation=1"
+      mainImage="/youtube-profile.avif"
+      badgeImage="/youtube-logo.avif"
+      altText="@siwalikm"
+      customClass="lg:w-1/2 sm:w-full"
+    >
+      <strong>@siwalikm</strong>
+      {
+        youtubeStats && youtubeStats.subscriberCount && (
+          <p class="truncate">{youtubeStats.subscriberCount} subscribers</p>
+        )
+      }
+    </Card>
+
+    <article class="flex flex-col gap-8">
+      <p>
+        Beyond the keyboard, I'm devouring
+        <Link
+          type="underline"
+          href="https://www.duolingo.com/profile/siwalikm"
+          label="new languages"
+        />, exploring
+        <Link
+          type="underline"
+          href="https://unsplash.com/@siwalikm"
+          label="photography"
+        />
+        or perfecting my coffee brewing skills (doomscrolling on Reddit optional).
+      </p>
+    </article>
+    <article class="flex flex-col gap-8">
+      <header class="flex w-full flex-row items-center justify-between gap-2">
+        <h3>Latest posts</h3>
+        <Link
+          type="underline"
+          href="/posts"
+          label="See all posts"
+          target="_self"
+        />
+      </header>
+    </article>
+    {posts.length === 0 && <p>Soon, stay connected 👀...</p>}
+
+    <section class="flex flex-col gap-4 md:flex-row md:flex-wrap">
+      {
+        posts.length !== 0 &&
+          posts.slice(0, 2).map((post) => (
+            <Card
+              target="_self"
+              link={`/posts/${post.slug}`}
+              customClass="w-full"
+            >
+              <div class="">
+                <strong>{post.data.title}</strong>
+                <p class="line-clamp-1">{post.data.description}</p>
+              </div>
+            </Card>
+          ))
+      }
+    </section>
+  </main>
+
+  <article class="flex flex-col">
+    <header class="mt-2 flex w-full flex-row justify-between gap-2">
+      <h3>Get in touch</h3>
+    </header>
+    <p>
+      Follow my journey & see what I'm up to on
+      <br />
+      <br />
+      <SocialLinks />
+      <br />
+      <p class="flex flex-col items-center gap-4 sm:flex-row">
+        Have a burning question?
+        <Link
+          type="button"
+          href="https://discord.gg/YvxBjmM7Dk"
+          label="Open Discord"
+        />
+      </p>
+    </p>
+  </article>
+</Layout>

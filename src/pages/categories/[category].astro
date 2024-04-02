@@ -1,0 +1,45 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import UnstyledCard from "@/components/shared/UnstyledCard.astro";
+import { formatDate } from "@/utils/formatDate";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+
+  return posts.map((post) => ({
+    params: { category: post.data.category },
+    props: { post, category: post.data.category },
+  }));
+}
+
+type Props = {
+  post: CollectionEntry<"posts">;
+  category: CollectionEntry<"posts">["data"]["category"];
+};
+
+const posts = await getCollection("posts");
+const { post, category } = Astro.props;
+
+const filterPosts = posts
+  .sort(function (first, second) {
+    return second.data.publishedAt.getTime() - first.data.publishedAt.getTime();
+  })
+  .filter((posts) => posts.data.category === category);
+---
+
+<Layout title="Template - All Posts">
+  <h1 class="mt-2">Blogs tagged #{category}</h1>
+  <article class="flex flex-col">
+    {
+      filterPosts.map((post) => (
+        <UnstyledCard target="_self" link={`/posts/${post.slug}`}>
+          <div class="group flex flex-col">
+            <h3 class="m-0 text-white">{post.data.title}</h3>
+            <p class="text-gray-500">{formatDate(post.data.publishedAt)}</p>
+          </div>
+        </UnstyledCard>
+      ))
+    }
+  </article>
+</Layout>

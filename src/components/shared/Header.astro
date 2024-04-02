@@ -1,0 +1,41 @@
+---
+const pathname = Astro.url.pathname;
+const isPostsPath = pathname.includes("/posts");
+
+let slug = "";
+if (isPostsPath) {
+  const parts = pathname.split("/");
+  if (parts.length > 2) {
+    slug = parts.slice(2).join("/");
+  }
+}
+---
+
+<header class="z-40 flex w-full flex-col gap-2 md:flex-row md:justify-between">
+  <nav role="navigation">
+    <ul role="list" class="flex flex-row gap-4">
+      <li>
+        <a
+          href="/"
+          class:list={{
+            ["hover:text-text-muted"]: true,
+            ["text-text-muted"]: pathname === "/",
+          }}>Home</a
+        >
+      </li>
+
+      <li>
+        <a
+          href="/posts"
+          class:list={{
+            ["hover:text-text-muted"]: true,
+            ["text-text-muted"]: pathname === "/posts",
+          }}>Posts</a
+        >
+      </li>
+      <li>
+        {slug ? <span class="text-text-muted">/ {slug}</span> : ""}
+      </li>
+    </ul>
+  </nav>
+</header>

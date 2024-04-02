@@ -1,0 +1,26 @@
+---
+import Header from "../components/shared/Header.astro";
+import Footer from "../components/shared/Footer.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import GoogleAnalytics from "../components/third-party/GoogleAnalytics.astro";
+
+import "@/styles/global.css";
+import "@/styles/post.css";
+
+const headTags = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <GoogleAnalytics />
+    <SEOTags {...headTags} />
+  </head>
+  <body
+    class="mx-auto flex min-h-screen max-w-[770px] flex-col gap-9 bg-bg-canvas px-10 py-8 text-text-content"
+  >
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,33 @@
+---
+import type { HTMLAttributes } from "astro/types";
+type Props = HTMLAttributes<"a"> & {
+  label: string;
+  type?: "plain" | "underline" | "button";
+  customClass?: string;
+};
+
+const {
+  label,
+  type = "plain",
+  customClass = "",
+  target = "_blank",
+  ...props
+} = Astro.props;
+---
+
+<a
+  href={props.href}
+  class:list={{
+    ["cursor-pointer transition font-medium"]: true,
+    [`hover:text-text-muted hover:decoration-none underline underline-offset-2 decoration-2 underline transition`]:
+      type === "underline",
+    [`bg-bg-primary hover:bg-bg-secondary my1 px-2 py-2 rounded font-semibold`]:
+      type === "button",
+    "inline-block": true,
+    [customClass]: customClass !== "",
+  }}
+  rel="noreferrer"
+  target={target}
+  {...props}
+  >{label}<span class="sr-only">{label} link</span>
+</a>

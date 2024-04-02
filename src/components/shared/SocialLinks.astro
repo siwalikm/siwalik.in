@@ -1,0 +1,52 @@
+---
+import Link from "./Link.astro";
+
+const socials = [
+  {
+    label: "Github",
+    link: "https://github.com/siwalikm",
+    themeColor: "bg-white text-black hover:text-white",
+  },
+  {
+    label: "X",
+    link: "https://x.com/siwalikm",
+    themeColor: "bg-neutral-700 text-white hover:text-white",
+  },
+  {
+    label: "LinkedIn",
+    link: "https://www.linkedin.com/in/siwalikm",
+    themeColor: "bg-sky-600 text-white",
+  },
+  {
+    label: "YouTube",
+    link: "https://www.youtube.com/@siwalikm",
+    themeColor: "bg-red-600 text-white",
+  },
+  {
+    label: "Instagram",
+    link: "https://www.instagram.com/siwalikm",
+    themeColor:
+      "text-white bg-gradient-to-r from-orange-500 via-violet-600 to-blue-700 hover:from-gray-700 hover:to-gray-700",
+  },
+  {
+    label: "Dribbble",
+    link: "https://www.dribbble.com/siwalikm",
+    themeColor: "bg-pink-500 text-white",
+  },
+];
+---
+
+<div role="list" class="flex flex-row flex-wrap gap-2">
+  {
+    socials.map((social, index) => (
+      <>
+        <Link
+          type="button"
+          href={social.link}
+          label={social.label}
+          customClass={social.themeColor}
+        />
+      </>
+    ))
+  }
+</div>

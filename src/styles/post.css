@@ -1,0 +1,31 @@
+.post-body p {
+  @apply my-4 leading-7;
+}
+
+.post-body a {
+  @apply inline-block cursor-pointer font-medium underline decoration-2 underline-offset-2 transition hover:text-text-muted;
+}
+
+.post-body blockquote {
+  @apply flex flex-row items-center gap-2 rounded-r border-l-4 border-l-bg-primary bg-neutral-800 px-2 shadow-md before:block before:h-auto before:w-1 before:max-w-[1px] before:content-[''];
+}
+
+.post-body blockquote blockquote {
+  @apply mx-2 my-2;
+}
+
+.post-body code {
+  @apply rounded-sm bg-neutral-800 px-2 py-[2px] text-text-primary;
+}
+
+.post-body ul {
+  @apply list-disc pl-4;
+}
+
+.post-body pre {
+  @apply p-4;
+}
+
+.post-body pre > code {
+  @apply bg-transparent;
+}

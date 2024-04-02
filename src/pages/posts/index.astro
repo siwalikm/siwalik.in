@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Link from "@/components/shared/Link.astro";
+import UnstyledCard from "@/components/shared/UnstyledCard.astro";
+import { formatDate } from "@/utils/formatDate";
+
+const posts = (await getCollection("posts")).sort(function (first, second) {
+  return second.data.publishedAt.getTime() - first.data.publishedAt.getTime();
+});
+---
+
+<Layout title="Template - All Posts">
+  <h1 class="mt-2">Read my blog posts</h1>
+  <article class="flex flex-col">
+    {
+      posts.map((post) => (
+        <UnstyledCard target="_self" link={`/posts/${post.slug}`}>
+          <div class="group flex flex-col">
+            <h3 class="m-0 text-white">{post.data.title}</h3>
+            <p class="text-gray-500">{formatDate(post.data.publishedAt)}</p>
+            <div>&nbsp</div>
+          </div>
+          <span slot="link">
+            <Link
+              type={"underline"}
+              customClass="group-hover:text-black relative -top-9 mx-4 text-sm"
+              target={"_self"}
+              href={`/categories/${post.data.category}`}
+              label={`#${post.data.category}`}
+            />
+          </span>
+        </UnstyledCard>
+      ))
+    }
+  </article>
+</Layout>

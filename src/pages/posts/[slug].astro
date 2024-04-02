@@ -1,0 +1,61 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import NewsletterForm from "@/components/third-party/NewsletterForm.astro";
+import { formatDate } from "@/utils/formatDate";
+import Link from "@/components/shared/Link.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+type Props = {
+  post: CollectionEntry<"posts">;
+};
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const postURL = `https://github.com/siwalikm/siwalik.in/blob/main/src/content/posts/${post.slug}.md`;
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <main class="mx-auto flex w-full flex-col gap-4">
+    <header
+      role="presentation"
+      class="post-header rounded-lg bg-bg-secondary p-4 text-white shadow-md"
+    >
+      <h1 class="title my-2 text-4xl font-bold">
+        {post.data.title}
+      </h1>
+      <p class="description mb-2 text-lg">{post.data.description}</p>
+      <div class="flex flex-row items-center justify-between">
+        <p class="flex items-center gap-2 text-text-muted">
+          <Link
+            target={"_self"}
+            href={`/categories/${post.data.category}`}
+            label={`#${post.data.category}`}
+          />
+          /
+          <Link href={postURL} label="typo? edit post" />
+        </p>
+        <p class="date text-sm">
+          {formatDate(post.data.publishedAt)}
+        </p>
+      </div>
+    </header>
+
+    <article class="post-body text-base">
+      <Content />
+
+      <br />
+      <hr />
+      <br />
+      <NewsletterForm />
+    </article>
+  </main>
+</Layout>
