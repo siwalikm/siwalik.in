@@ -87,7 +87,7 @@ const youtubeStats = await response.items?.[0].statistics;
     </article>
     <article class="flex flex-col gap-8">
       <header class="flex w-full flex-row items-center justify-between gap-2">
-        <h3>Latest posts</h3>
+        <h2>Latest posts</h2>
         <Link
           type="underline"
           href="/posts"
@@ -119,7 +119,7 @@ const youtubeStats = await response.items?.[0].statistics;
 
   <article class="flex flex-col">
     <header class="mt-2 flex w-full flex-row justify-between gap-2">
-      <h3>Get in touch</h3>
+      <h2>Get in touch</h2>
     </header>
     <p>
       Follow my journey & see what I'm up to on
@@ -131,6 +131,7 @@ const youtubeStats = await response.items?.[0].statistics;
         Have a burning question?
         <Link
           type="button"
+          customClass="bg-button-primary"
           href="https://discord.gg/YvxBjmM7Dk"
           label="Open Discord"
         />

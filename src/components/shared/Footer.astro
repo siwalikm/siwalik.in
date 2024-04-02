@@ -1,4 +1,6 @@
 ---
+import Link from "@/components/shared/Link.astro";
+
 const year = new Date().getFullYear();
 ---
 
@@ -7,21 +9,10 @@ const year = new Date().getFullYear();
     copyright: © {year}
     Siwalik Mukherjee
     <br />This is V4 of my personal site.
-    <a
-      class="text-text-muted"
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://v3.siwalik.in/">V3</a
-    > • <a
-      class="text-text-muted"
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://v2.siwalik.in/">V2</a
-    > • <a
-      class="text-text-muted"
-      href="https://v1.siwalik.in/"
-      target="_blank"
-      rel="noopener noreferrer">V1</a
-    >
+    <Link type="underline" href="https://v3.siwalik.in/" label="V3" />
+    •
+    <Link type="underline" href="https://v2.siwalik.in/" label="V2" />
+    •
+    <Link type="underline" href="https://v1.siwalik.in/" label="V1" />
   </nav>
 </footer>

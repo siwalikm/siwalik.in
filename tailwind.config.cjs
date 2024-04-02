@@ -20,7 +20,7 @@ module.exports = {
         "link-regular": colors.amber[300],
         "link-hover": colors.amber[400],
 
-        "button-primary": colors.indigo[500],
+        "button-primary": colors.indigo[600],
         "button-secondary": colors.neutral[700],
       },
       fontFamily: {
